@@ -1,5 +1,4 @@
-# ada-2023-project-robertwestfanclub2023
-## Title: Investigation on patent personas of Film characters
+## Investigation on patent personas of Film characters
 
 
 ## Abstract: A 150-word description of the project idea and goals. What’s the motivation behind your project? What story would you like to tell, and why?
