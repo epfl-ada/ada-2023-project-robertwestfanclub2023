@@ -12,15 +12,14 @@ The main dataset is provided by the CMU Movie Summary Corpus project. It include
 
 A list of research questions you would like to address during the project.
 
-- Question 1: How do film genres evolve over time, and what factors contribute to their popularity in various geographic regions and throughout the year?
-- Question 2: Can historical patterns of genre popularity be used to predict future trends?
-- Question 3: How does release timing impact a movie's success at the box office and its chances of winning awards?
+- Question 1: What is the relationship between a film's release timing in a year, its genre, and any recurring patterns? If such patterns exist, when have they been observed, and do they vary based on the film's place of release? Can these patterns be leveraged to predict the genre of the next season's film releases?
+- Question 2: How does release timing impact a movie's success, particularly its likelihood of winning awards and receiving favorable ratings?
+- Question 3: In what ways is a movie's popularity affected by its release period, considering factors such as box office revenue and ratings?
 
 ## Proposed additional datasets:
 
-**Proposed Additional Datasets:**
-
-- Awards Dataset: To represent awards each movie received. (Source: To be determined)
+- Awards Dataset: (TODO: include description)
+- IMDB Dataset: (TODO: include description)
 
 ## Methods
 
@@ -28,27 +27,19 @@ A list of research questions you would like to address during the project.
 - Causal Discovery: Identify factors influencing changes in genre popularity.
 - Exploratory Analysis: Analyze the correlation between release timing, box office success, and potential awards.
 
-## Proposed timeline
+## Proposed Timeline:
 
-- Until November 17:
-  - Verify initial ideas and propose feasible project goals
-  - Finish data wrangling
-  - Descriptive analysis
-  - Prepare necessary additional dataset
-- Until December 20
-  - Further work
+- 17.11.2003: Finish milestone P2, start Homework 2
+- 24.11.2023: Complete project directions given milestone P2 feedback and initial analyses
+- 01.12.2023: Homework 2 deadline, begin final analysis
+- 08.12.2023: Draft data story and finish analysis
+- 15.12.2023: Finish data story, start website and final review
+- 23.12.2023: Milestone P3 deadline
 
-## Organization within the team:
+## Organisation within the team:
 
-A list of internal milestones up until project Milestone P3.
-
-- Work split:
-- Milestone 3.1
-- Milestone 3.2
-- Milestone 3.3
-
-## Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
-
-- Question 1
-- Question 2
-  ...
+- Léa: 
+- Salim: 
+- Jason: 
+- Pierre-Hadrien: 
+- Yanruiqi: 
