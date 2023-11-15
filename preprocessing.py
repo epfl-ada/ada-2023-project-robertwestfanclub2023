@@ -1,4 +1,15 @@
+
+####################################################################################################
+# IMPORTS
+####################################################################################################
 import pandas as pd
+import tqdm
+from tqdm import tqdm
+
+
+####################################################################################################
+# Data Cleaning and Preprocessing
+####################################################################################################
 
 def preprocess_dict(row):
     """
@@ -113,9 +124,13 @@ def process_movie_data(df_movie, save_to_path=None):
         # Preprocess data and append to lists
         row = preprocess_dict(row)
         for genre in row['Movie genres']:
-            dict = row.to_dict()
-            dict['Movie genres'] = [genre]
-            df_process = pd.concat([df_process, pd.DataFrame(dict)], ignore_index=True)
+            for country in row['Movie countries']:
+                for language in row['Movie languages']:
+                    dict = row.to_dict()
+                    dict['Movie genres'] = [genre]
+                    dict['Movie countries'] = [country]
+                    dict['Movie languages'] = [language]
+                    df_process = pd.concat([df_process, pd.DataFrame(dict)], ignore_index=True)
 
     # Print the number of unique countries, languages, and genres
     print(f'In the movie dataset, there are {len(dict_countries)} different countries.')
@@ -130,6 +145,7 @@ def process_movie_data(df_movie, save_to_path=None):
         df_process.to_csv(save_to_path, index=False)
 
     return df_process
+
 
 def count_and_sort_movie_genres(df_movie):
     """

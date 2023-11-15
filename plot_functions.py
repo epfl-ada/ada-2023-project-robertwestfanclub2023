@@ -1,9 +1,67 @@
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import calendar
-
 import preprocessing
 from preprocessing import filter_movies_by_genres
+
+def plot_movie_release_distribution(df_movie):
+    """
+    Plots the distribution of movie releases by year within the range 1915-2012.
+
+    Parameters:
+    - df_movie (pd.DataFrame): DataFrame containing movie data.
+
+    Returns:
+    - None
+    """
+    # Create bins for the histogram
+    bins = np.arange(1915, 2013) - 0.5
+    
+    # Create the histogram with log scale
+    plt.hist(df_movie["Release Year"], histtype="step", bins=bins, log=True, color='b')
+    
+    # Set the plot title and labels
+    plt.title("Distribution of Movie Releases by Year (1915-2012)")
+    plt.xlabel("Year of Release")
+    plt.ylabel("Number of Movies")
+
+    # Customize the x-axis ticks
+    plt.xticks(range(1915, 2013, 10), rotation=45)
+    
+    # Turn off the grid
+    plt.grid(False)
+
+    # Show the plot
+    plt.show()
+
+
+def create_genre_pie_chart(df_filter):
+    """
+    Create a pie chart to visualize the distribution of movie genres in a DataFrame.
+
+    Args:
+        df (pandas.DataFrame): The DataFrame containing movie genre data.
+
+    Returns:
+        None
+
+    This function takes a DataFrame with a 'Movie genres' column and creates a pie chart to visualize
+    the distribution of movie genres in the dataset.
+
+    """
+    labels = df_filter['Movie genres'].value_counts().index.tolist()
+    data_counts = df_filter['Movie genres'].value_counts().values.tolist()
+
+    # Create the pie chart using Seaborn
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(6, 6))
+    sns.set_palette("pastel")
+    plt.pie(data_counts, labels=labels, autopct='%1.1f%%', startangle=140)
+    plt.title("Movie Genres Distribution")
+
+    plt.show()
+
 
 def plot_month_release_availability(df):
     """
@@ -58,8 +116,6 @@ def plot_month_release_availability(df):
 
     # Show the pie chart
     plt.show()
-
-
 
 def plot_monthly_movie_counts(df, selected_genres = None):
     """
