@@ -20,3 +20,20 @@ def save_dataframe_to_csv(dataframe, file_path):
         return False
 
 
+def get_path(url):
+    """
+    Returns data path for input url.
+    Returned path can be used to make dataframe.
+
+    Parameters
+    ----------
+    url: string
+        The url you desire to find path for
+
+    Returns
+    -------
+    path: string
+        The path which can be used to make dataframe in pandas
+
+    """
+    return "https://drive.google.com/uc?id=" + url.split("/")[-2]
