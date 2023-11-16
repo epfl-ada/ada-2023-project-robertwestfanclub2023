@@ -188,13 +188,22 @@ def plot_award_distribution(df, str):
     # Add the 'Others' category to the top countries
     top_countries['Others'] = other_countries_count
 
+    # Explode the top 2 countries
+    explode = [0.1 if i < 2 else 0 for i in range(len(top_countries))]
+
     # Plotting the distribution
-    ax = top_countries.plot(kind='pie', autopct='%1.1f%%', startangle=90, colormap='tab20')
+    fig, ax = plt.subplots(figsize=(8, 8))
+    wedges, texts = ax.pie(top_countries, startangle=90, explode=explode, labels=top_countries.index, pctdistance=0.8, textprops=dict(color="w"))
 
     # Adding labels and title
     plt.axis('equal')
     plt.title('Distribution of Movie '+str)
-    ax.set_ylabel('')
+
+    # Creating a legend with percentage labels
+    legend_labels = [f"{label} ({value} movies, {percentage:.1f}%)"
+                     for label, value, percentage in zip(top_countries.index, top_countries.values, top_countries.values / top_countries.values.sum() * 100)]
+
+    plt.legend(wedges, legend_labels, title=str.capitalize(), loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
 
     # Display the plot
     plt.show()
