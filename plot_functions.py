@@ -164,3 +164,34 @@ def plot_monthly_movie_counts(df, selected_genres = None):
             plt.ylabel("Number of movies")
             plt.xticks(range(12), month_names, rotation=45)  # You can adjust the rotation angle as per your preference
             plt.show()
+
+def plot_award_distribution(df, str):
+    """
+    Plot the pie chart for award dataset
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the movie data with a "Release Month" column.
+        str: string to control the output display
+
+    Returns:
+        None
+    """
+
+    country_counts = df['Movie '+str].value_counts()
+
+    # Select the top 10 countries
+    top_countries = country_counts[:5]
+
+    # Sum up the rest of the countries
+    other_countries_count = country_counts[5:].sum()
+
+    # Add the 'Others' category to the top countries
+    top_countries['Others'] = other_countries_count
+
+    # Plotting the distribution
+    ax = top_countries.plot(kind='pie', autopct='%1.1f%%', startangle=90, colormap='tab20')
+
+    # Adding labels and title
+    plt.axis('equal')
+    plt.title('Distribution of Movie '+str)
+    ax.set_ylabel('')
