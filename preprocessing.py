@@ -246,3 +246,26 @@ def assign_movie_continents(df):
     df['Movie Continent'] = list_continents
 
     return df
+
+def update_release_month_and_day(df):
+    """
+    Update the 'Release Month' and 'Release Day' columns in a DataFrame based on the 'Movie release date' column.
+
+    This function iterates through the DataFrame and checks if 'Month Available' is False and 'Movie release date' is a string.
+    If both conditions are met, it extracts the year, month, and day from 'Movie release date' and updates the corresponding columns.
+    
+    Args:
+        df (pd.DataFrame): The DataFrame to update in-place.
+
+    Returns:
+        None
+    """
+    for index, row in df.iterrows():
+        if not row['Month Available'] and isinstance(row['Movie release date'], str): 
+            year, month, day = row['Movie release date'].split('-')  
+            if int(year) == row['Release Year']:
+                df.at[index, 'Release Month'] = int(month)
+                df.at[index, 'Release Day'] = int(day)
+                df.at[index, 'Month Available'] = True
+                
+    return df

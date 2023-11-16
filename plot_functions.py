@@ -110,11 +110,6 @@ def plot_monthly_movie_counts(df, selected_genres = None):
     Returns:
         None
     """
-
-    # Filter the DataFrame to include only rows where movies are available
-    print(df.shape)
-    df = df[df['Month Available']]
-    print(df.shape)
     if selected_genres is None:
         # Count the number of movies released in each month and sort by month index
         month_counts = df["Release Month"].value_counts().sort_index()
