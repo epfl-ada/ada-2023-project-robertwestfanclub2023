@@ -195,3 +195,6 @@ def plot_award_distribution(df, str):
     plt.axis('equal')
     plt.title('Distribution of Movie '+str)
     ax.set_ylabel('')
+
+    # Display the plot
+    plt.show()
