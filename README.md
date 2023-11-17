@@ -19,9 +19,9 @@ To enhance our dataset and address missing values, we incorporated several addit
 A list of research questions you would like to address during the project.
 
 - Question 1: Are there any recurring patterns between a film's genre and its release timing within a year? If such patterns exist, do they vary based on the location of the movie, and can these insights contribute to predicting the genre of upcoming film releases in subsequent seasons?
-- Question 2: How does release timing impact a movie's success, particularly its likelihood of winning awards?
+- Question 2: Which factors have an impact on a movie's success, particularly its likelihood of winning an Oscar award? How does the effect of release timing evolve over time? Is it possible to predict the Oscar probability, given some factors such as release month, country, language, etc.?
 - Question 3: In what ways is a movie's popularity affected by its release period, considering factors such as box office revenue and ratings?
-- Question 4: To what extent do the involvement of specific actors influence a film's success, including its chances of winning awards, expected box office revenue, and ratings? Additionally, can we generate actor groups based on genres and predict their probability of achieving success?
+- Question 4: To what extent does the involvement of specific actors influence a film's success, including its chances of winning awards, expected box office revenue, and ratings? Additionally, can we generate actor groups based on genres and predict their probability of achieving success?
 
 ## Methods
 
