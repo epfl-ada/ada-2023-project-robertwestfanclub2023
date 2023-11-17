@@ -49,4 +49,4 @@ A list of research questions you would like to address during the project.
 - Salim: Additional dataset processing and merging (MovieLens dataset and Kaggle's dataset)
 - Jason: include IMDb ratings, RQ3
 - Pierre-Hadrien: Utilize Character metadata, RQ4
-- Yanruiqi: Process and analysis on Awards Dataset, RQ2
+- Yanruiqi: Processing and analysis on Awards Dataset, RQ2
