@@ -233,3 +233,15 @@ def plot_award_distribution(df, str):
 
     # Display the plot
     plt.show()
+
+def plot_total_box_office(actor_revenue):
+    
+    # Plot the distribution
+    plt.figure(figsize=(12, 6))
+    actor_revenue.plot(kind='bar', color='skyblue')
+    
+    plt.title('Total Box Office Revenue by Actor (Top 50)')
+    plt.xlabel('Actor')
+    plt.ylabel('Total Box Office Revenue')
+    
+    plt.show()
