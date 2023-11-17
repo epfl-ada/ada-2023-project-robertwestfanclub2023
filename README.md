@@ -2,7 +2,7 @@
 
 ## Abstract:
 
-Our project explores the dynamic landscape of film releases, investigating their evolution over time and their adherence to seasonal trends. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars or Festival de Cannes intrigue us. By deciphering these patterns, we aim to predict future genre trends and examine how the timing of a movie's release influences its success. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass the effect of release period and actor choice on the popularity of a movie based on its box office revenue, user ratings, and awards received.
+Our project explores the dynamic landscape of film releases, investigating their adherence to seasonal trends and awards ceremony. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars or Festival de Cannes intrigue us. By deciphering these patterns, we aim to predict future genre trends and examine how the timing of a movie's release as well as the actor choice influences its success, based on several factors. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass the effect of release period and actor choice on the popularity of a movie based on its box office revenue, user ratings, and awards received.
 
 ## Datasets
 
