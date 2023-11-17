@@ -2,7 +2,7 @@
 
 ## Abstract:
 
-Our project explores the dynamic landscape of film releases, investigating their adherence to seasonal trends and awards ceremony. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars or Festival de Cannes intrigue us. By deciphering these patterns, we aim to predict future genre trends and examine how the timing of a movie's release as well as the actor choice influences its success, based on several factors. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass the effect of release period and actor choice on the popularity of a movie based on its box office revenue, user ratings, and awards received.
+Our project explores the dynamic landscape of film releases, investigating their adherence to seasonal trends and awards ceremonies. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars or Festival de Cannes intrigue us. By deciphering these patterns, we aim to predict future genre trends and examine how the timing of a movie's release as well as the actor's choice influences its success, based on several factors. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass the effect of release period and actor choice on the popularity of a movie based on its box office revenue, user ratings, and awards received.
 
 ## Datasets
 
@@ -12,7 +12,7 @@ To enhance our dataset and address missing values, we incorporated several addit
 
 - MovieLens: *INCLUDE DATASET DESCRIPTION*.
 - IMDb: This dataset provides average ratings and the number of votes for more than three million movies, accessible at: [IMDb Dataset](https://developer.imdb.com/non-commercial-datasets/).
-- Academy Awards Database: A comprehensive record of Oscar's nominees and winners, encompassing movie names, year, and category, since the first Oscar's to the present day. This dataset can be found at: [Academy Awards Database](https://www.oscars.org/oscars/awards-databases).
+- Academy Awards Database: A comprehensive record of Oscar nominees and winners, encompassing movie names, year, and category, since the first Oscars to the present day. This dataset can be found at: [Academy Awards Database](https://www.oscars.org/oscars/awards-databases).
 
 ## Research Questions:
 
@@ -31,7 +31,7 @@ A list of research questions you would like to address during the project.
 
 - Exploratory Analysis: An in-depth examination of the correlation between release timing, box office success, and potential awards. This involves dissecting the relationships between the timing of film releases, their financial success, and the recognition they receive in prestigious awards ceremonies.
 
-- Actor Influence Analysis: Investigating the impact of specific actors on a film's success, including their influence on winning awards, expected box office revenue, and ratings. We also aim to generate actor groups based on genres and predict their probability of achieving success.
+- Predictive Analysis: Investigating the impact of specific actors on a film's success, including their influence on winning awards, expected box office revenue, and ratings. We also aim to generate actor groups based on genres and predict their probability of achieving success; Predicting the probability that one movie can win the Oscar Award given key factors including actors, movie language, country, and release month.
 
 ## Proposed Timeline:
 
@@ -48,4 +48,4 @@ A list of research questions you would like to address during the project.
 - Salim: MovieLens dataset processing
 - Jason: include IMDb ratings, RQ3
 - Pierre-Hadrien: Utilize Character metadata, RQ4
-- Yanruiqi: Merge Awards Databse, RQ2
+- Yanruiqi: Process and analyze on Awards Dataset, RQ2
