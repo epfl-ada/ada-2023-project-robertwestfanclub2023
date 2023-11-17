@@ -89,9 +89,18 @@ def extract_date_info_and_update_df(df_movie):
     # Split the 'Release Date Info' column into three distinct columns: 'Release Year', 'Release Month', 'Release Day'
     df_movie[['Release Year', 'Release Month', 'Release Day', 'Month Available']] = pd.DataFrame(df_movie['Release Date Info'].tolist(), index=df_movie.index)
 
-    df_movie['Release Year'] = df_movie['Release Year'].astype('Int64')
-    df_movie['Release Month'] = df_movie['Release Month'].astype('Int64')
-    df_movie['Release Day'] = df_movie['Release Day'].astype('Int64')
+    release_list = df_movie['Release Year'].to_list()
+    release_list =  [int(x) if not pd.isna(x) else -1 for x in release_list]
+    df_movie['Release Year'] = release_list
+
+
+    release_list = df_movie['Release Month'].to_list()
+    release_list =  [int(x) if not pd.isna(x) else -1 for x in release_list]
+    df_movie['Release Month'] = release_list
+
+    release_list = df_movie['Release Day'].to_list()
+    release_list =  [int(x) if not pd.isna(x) else -1 for x in release_list]
+    df_movie['Release Day'] = release_list
 
     # Drop the temporary 'Release Date Info' and 'Movie release date' columns
     df_movie.drop(columns=['Release Date Info', 'Movie release date'], inplace=True)
@@ -213,3 +222,50 @@ def country_to_continent(country_name):
         return country_continent_name
     except KeyError:
         return np.nan
+    
+def assign_movie_continents(df):
+    """
+    Assign movie continents to a DataFrame based on the 'Movie countries' column.
+
+    Args:
+        df (pandas.DataFrame): The DataFrame containing movie data.
+
+    Returns:
+        pandas.DataFrame: The DataFrame with an added 'Movie Continent' column.
+    """
+    list_continents = []
+
+    # Iterate through DataFrame rows and assign continents
+    for index, row in tqdm(df.iterrows()):
+        if pd.isna(row['Movie countries']):
+            list_continents.append(np.nan)
+        else:
+            list_continents.append(country_to_continent(row['Movie countries']))
+
+    # Add the 'Movie Continent' column to the DataFrame
+    df['Movie Continent'] = list_continents
+
+    return df
+
+def update_release_month_and_day(df):
+    """
+    Update the 'Release Month' and 'Release Day' columns in a DataFrame based on the 'Movie release date' column.
+
+    This function iterates through the DataFrame and checks if 'Month Available' is False and 'Movie release date' is a string.
+    If both conditions are met, it extracts the year, month, and day from 'Movie release date' and updates the corresponding columns.
+    
+    Args:
+        df (pd.DataFrame): The DataFrame to update in-place.
+
+    Returns:
+        None
+    """
+    for index, row in df.iterrows():
+        if not row['Month Available'] and isinstance(row['Movie release date'], str): 
+            year, month, day = row['Movie release date'].split('-')  
+            if int(year) == row['Release Year']:
+                df.at[index, 'Release Month'] = int(month)
+                df.at[index, 'Release Day'] = int(day)
+                df.at[index, 'Month Available'] = True
+                
+    return df
