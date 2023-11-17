@@ -46,7 +46,7 @@ A list of research questions you would like to address during the project.
 ## Organisation within the team:
 
 - Léa: Movie metadata cleaning, RQ1
-- Salim: MovieLens dataset processing
+- Salim: Additional dataset : MovieLens dataset and Kaggle's dataset processing and merging
 - Jason: include IMDb ratings, RQ3
 - Pierre-Hadrien: Utilize Character metadata, RQ4
 - Yanruiqi: Process and analyze on Awards Dataset, RQ2
