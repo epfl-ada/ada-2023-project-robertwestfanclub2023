@@ -10,7 +10,8 @@ The main dataset comprises metadata extracted from Freebase, originally used in 
 
 To enhance our dataset and address missing values, we incorporated several additional datasets, including information on ratings and awards:
 
-- MovieLens: *INCLUDE DATASET DESCRIPTION*.
+- MovieLens: [This MovieLens dataset](https://files.grouplens.org/datasets/movielens/ml-25m-README.html) is a widely used dataset in the field of recommender systems, containing millions of movie ratings and tag assignments collected from the MovieLens website. It offers detailed information about movies, users, and their interactions, making it an essential resource for research and development in personalized recommendation algorithms. We will use it due to its extensive collection of movie ratings, which provides valuable insights for analyzing viewer preferences and movie popularity trends (The notebook additional_dataset.ipynb contains both the code and the explanations detailing how we preprocessed this dataset to construct our own tailored additional dataset).
+- The Movie Dataset : Our analysis heavily relies on the exact release dates of movies. However, 50% of our dataset only includes the year of release, not the month. Therefore, we will endeavor to extract as many exact release dates as possible from [this Kaggle dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset/data). Additionally, this dataset contains IMDb votes and ratings, which could also prove useful for our analysis.
 - IMDb: This dataset provides average ratings and the number of votes for more than three million movies, accessible at: [IMDb Dataset](https://developer.imdb.com/non-commercial-datasets/).
 - Academy Awards Database: A comprehensive record of Oscar nominees and winners, encompassing movie names, year, and category, since the first Oscars to the present day. This dataset can be found at: [Academy Awards Database](https://www.oscars.org/oscars/awards-databases).
 
