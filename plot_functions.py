@@ -284,3 +284,45 @@ def plot_total_box_office(actor_revenue):
     plt.ylabel('Total Box Office Revenue')
     
     plt.show()
+
+
+def plot_column_by_oscars_category(df, column,yscale):
+    """
+    Plots a box plot of the box office revenue for Oscar-winning movies in each category.
+
+    Parameters:
+    df (DataFrame): The input DataFrame containing movie data.
+    column (String): the column to plot
+    yscale (Boolean): whether to use log scale for y-axis
+    Returns:
+    None
+    """
+
+    # Filter the DataFrame for movies that have won Oscars and have non-NaN box office revenue
+    df_oscar_winners = df[(df['Winner'] == 1) & (~df[column].isna())]
+
+    # Filter out categories with fewer than a certain threshold of movies
+    category_threshold = 5  # Adjust as needed
+    category_counts = df_oscar_winners['Category'].value_counts()
+    valid_categories = category_counts[category_counts >= category_threshold].index
+    df_oscar_winners_filtered = df_oscar_winners[df_oscar_winners['Category'].isin(valid_categories)]
+
+    # Calculate mean box office revenue for each category and sort by mean in ascending order
+    mean_revenue_by_category = df_oscar_winners_filtered.groupby('Category')[column].mean().sort_values(ascending=True)
+
+    # Set up the plot
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(12, 8))
+    if yscale:
+        plt.yscale('log')  # Set y-axis to log scale for better visualization
+
+    # Create the box plot for each category, sorted by mean box office revenue
+    sns.boxplot(x='Category', y=column, data=df_oscar_winners_filtered,
+                order=mean_revenue_by_category.index, palette='Set1')
+
+    plt.title(f'{column} for Oscar Winners in Each Category (Filtered)')
+    plt.xlabel('Oscar Category')
+    plt.ylabel(column)
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    plt.tight_layout()
+    plt.show()
