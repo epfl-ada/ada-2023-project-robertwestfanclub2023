@@ -234,6 +234,45 @@ def plot_award_distribution(df, str):
     # Display the plot
     plt.show()
 
+def plot_box_office_oscars(df):
+
+    df_plot = df[['Winner', 'Movie box office revenue']].copy() 
+
+    # Convert 'Winner' column to numeric (True/False to 1/0)
+    df_plot['Winner'] = df_plot['Winner'].astype(int)
+
+    # Plot using seaborn
+
+    plt.figure(figsize=(10, 6))
+    sns.set(style="whitegrid")
+    sns.boxplot(x='Winner', y='Movie box office revenue', data=df_plot, palette={0: 'blue', 1: 'red'})
+
+    plt.title('Distribution of Box Office Revenue for Oscar Winners and Non-Winners')
+    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
+    plt.ylabel('Box Office Revenue')
+    plt.yscale('log')  # Set y-axis to log scale
+    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
+    plt.show()
+
+def plot_ratings_oscars(df):
+
+    df_plot = df[['Winner', 'Average Vote ']].copy() 
+
+    df_plot['Winner'] = df_plot['Winner'].astype(int)
+    df_plot['Average Vote '] = df_plot['Average Vote '].astype(float)
+
+    # Plot using seaborn
+    
+    plt.figure(figsize=(10, 6))
+    sns.set(style="whitegrid")
+    sns.boxplot(x='Winner', y='Average Vote ', data=df_plot, palette={0: 'blue', 1: 'red'})
+
+    plt.title('Distribution of Average Ratings for Oscar Winners and Non-Winners')
+    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
+    plt.ylabel('Average Ratings')
+    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
+    plt.show()
+
 def plot_total_box_office(actor_revenue):
     
     # Plot the distribution
