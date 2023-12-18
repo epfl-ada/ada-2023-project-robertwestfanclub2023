@@ -2,11 +2,11 @@
 
 ## Abstract:
 
-Our project explores the dynamic landscape of film releases, investigating their adherence to seasonal trends and awards ceremonies. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars intrigue us. By deciphering these patterns, we aim to predict future genre trends and examine how the timing of a movie's release as well as the actor's choice influences its success, based on several factors. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass the effect of release period and actor choice on the popularity of a movie based on its box office revenue, user ratings, and awards received.
+Our project delves into the dynamic landscape of film releases, investigating their adherence to seasonal trends, awards ceremonies, and the broader factors that contribute to their success. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars intrigue us. By deciphering seasonal, locational and success based trends, we aim to examine how those factors influence its success, based on other factors such as awards, ratings and box office revenue. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass all necessary factors. This exploration will prove interesting for movie enthusiasts, as well as for film producers and distributors, who can leverage our findings to optimize their release strategies.
 
 ## Datasets
 
-The main dataset comprises metadata extracted from Freebase, originally used in the CMU Movie Summary Corpus dataset, which will not be utilized in our analysis. This dataset encompasses information on 81,741 films and was extracted from the Freebase database dated November 4, 2012. Covering the period from 1915 to 2012, it includes a diverse range of historical films. The metadata provides details about movies, such as box office revenue, genre, release period, language, and aligned information about characters and the actors portraying them (name, gender, age, etc.). Additional information about this dataset can be found on the CMU Movie Summary Corpus page: [CMU Movie Summary Corpus](https://www.cs.cmu.edu/~ark/personas/), and in the dataset README, which includes column names: [README.txt]( https://www.cs.cmu.edu/~ark/personas/data/README.txt).
+The main dataset comprises metadata extracted from Freebase, originally used in the CMU Movie Summary Corpus dataset, which will not be utilized in our analysis. This dataset encompasses information on 81,741 films and was extracted from the Freebase database dated November 4, 2012. Covering the period from 1915 to 2012, it includes a diverse range of historical films. The metadata provides details about movies, such as box office revenue, genre, release period, language, and aligned information about characters and the actors portraying them (name, gender, age, etc.). Additional information about this dataset can be found on the CMU Movie Summary Corpus page: [CMU Movie Summary Corpus](https://www.cs.cmu.edu/~ark/personas/), and in the dataset README, which includes column names: [README.txt](https://www.cs.cmu.edu/~ark/personas/data/README.txt).
 
 To enhance our dataset and address missing values, we incorporated several additional datasets, including information on ratings and awards:
 
@@ -20,8 +20,11 @@ To enhance our dataset and address missing values, we incorporated several addit
 A list of research questions you would like to address during the project.
 
 - Question 1: Are there any recurring patterns between a film's genre and its release timing within a year? If such patterns exist, do they vary based on the location of the movie, and can these insights contribute to predicting the genre of upcoming film releases in subsequent seasons?
-- Question 2: Which factors have an impact on a movie's success, particularly its likelihood of winning an Oscar award? How does the effect of release timing evolve over time? Is it possible to predict the Oscar probability, given some factors such as release month, country, language, etc.?
+- Question 2: How does the release timing of a movie impact its likelihood of winning an Oscar award? Which other factors have an impact on these chances?
 - Question 3: How does the release month of a movie influence its overall success and popularity, as evidenced by box office revenues, the number of votes, and ratings, while also accounting for the evolution of data documentation quality over the years?
+
+This question was considered to broad to include in our analysis, se we decided not to include it after milestone 2:
+
 - Question 4: To what extent does the involvement of specific actors influence a film's success, including its chances of winning awards, expected box office revenue, and ratings? Additionally, can we generate actor groups based on genres and predict their probability of achieving success?
 
 ## Methods
@@ -32,7 +35,9 @@ A list of research questions you would like to address during the project.
 
 - Exploratory Analysis: An in-depth examination of the correlation between release timing, box office success, and potential awards. This involves dissecting the relationships between the timing of film releases, their financial success, and the recognition they receive in prestigious awards ceremonies.
 
-- Predictive Analysis: Investigating the impact of specific actors on a film's success, including their influence on winning awards, expected box office revenue, and ratings. We also aim to generate actor groups based on genres and predict their probability of achieving success; Predicting the probability that one movie can win the Oscar Award given key factors including actors, movie language, country, and release month.
+Linked to question 4 (not included in our final analysis, see milestone 2 feedback):
+
+- Causal Analysis: Investigating the impact of specific actors on a film's success, including their influence on winning awards, expected box office revenue, and ratings. We also aim to generate actor groups based on genres and predict their probability of achieving success; Predicting the probability that one movie can win the Oscar Award given key factors including actors, movie language, country, and release month.
 
 ## Proposed Timeline:
 
@@ -45,8 +50,18 @@ A list of research questions you would like to address during the project.
 
 ## Organisation within the team:
 
+Milestone 2:
+
 - Léa: Movie metadata cleaning, RQ1
 - Salim: Additional dataset processing and merging (MovieLens dataset and Kaggle's dataset)
 - Jason: include IMDb ratings, RQ3
 - Pierre-Hadrien: Utilize Character metadata, RQ4
 - Yanruiqi: Processing and analysis on Awards Dataset, RQ2
+
+Milestone 3:
+
+- Léa: Analysis of research question 1
+- Salim: Use of the IMDb ratings and analaysis of research question 2
+- Jason: Research question 2
+- Pierre-Hadrien: Analysis of research question 2, in particular impact of movies' success and other factors on their chances of winning an Oscar
+- Yanruiqi: Analysis of research question 2, in particular seasonal and locational trends in Oscar winners
