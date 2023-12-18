@@ -322,7 +322,10 @@ def plot_column_by_oscars_category(df, column,yscale):
 
     plt.title(f'{column} for Oscar Winners in Each Category (Filtered)')
     plt.xlabel('Oscar Category')
-    plt.ylabel(column)
+    if yscale:
+        plt.ylabel(f'{column} (log scale)')
+    else:
+        plt.ylabel(column)
     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
     plt.tight_layout()
     plt.show()

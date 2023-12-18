@@ -29,11 +29,19 @@ This question was considered to broad to include in our analysis, se we decided 
 
 ## Methods
 
+### Research Question 1:
+
 - Descriptive Analysis: Conducting an exhaustive examination of the historical evolution of genre popularity and seasonal trends. This involves dissecting patterns in film releases, identifying genre shifts over time, and understanding their correlation with seasonal fluctuations.
 
-- Causal Discovery: Delving into the causal factors influencing changes in genre popularity. Through a systematic analysis, we aim to identify and understand the key drivers that contribute to shifts in the popularity of different film genres.
+### Research Question 2:
 
 - Exploratory Analysis: An in-depth examination of the correlation between release timing, box office success, and potential awards. This involves dissecting the relationships between the timing of film releases, their financial success, and the recognition they receive in prestigious awards ceremonies.
+
+- T-test: we use Welch's t-test to compare the means of two groups of data, in order to determine whether there is a significant difference between them. In our case, we use it to compare the box office revenue or average ratings between movies.
+
+- Person's correlation: we use Person's correlation to measure the strength of a linear relationship between two variables. In our case, we use it to measure the correlation between the box office revenue or average ratings with the probability of winning an Oscars, amongst other analysis.
+
+### Research Question 3:
 
 Linked to question 4 (not included in our final analysis, see milestone 2 feedback):
 
