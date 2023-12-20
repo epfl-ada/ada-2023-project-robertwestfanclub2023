@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import calendar
@@ -236,16 +237,13 @@ def plot_award_distribution(df, str):
 
 def plot_box_office_oscars(df):
 
-    df_plot = df[['Winner', 'Movie box office revenue']].copy() 
-
-    # Convert 'Winner' column to numeric (True/False to 1/0)
-    df_plot['Winner'] = df_plot['Winner'].astype(int)
+    df_plot = df[['Winner Binary', 'Movie box office revenue']].copy() 
 
     # Plot using seaborn
 
     plt.figure(figsize=(10, 6))
     sns.set(style="whitegrid")
-    sns.boxplot(x='Winner', y='Movie box office revenue', data=df_plot, palette={0: 'blue', 1: 'red'})
+    sns.boxplot(x='Winner Binary', y='Movie box office revenue', data=df_plot, palette=['blue', 'red'])
 
     plt.title('Distribution of Box Office Revenue for Oscar Winners and Non-Winners')
     plt.xlabel('Oscar Winner (1: Yes, 0: No)')
@@ -265,7 +263,7 @@ def plot_ratings_oscars(df):
     
     plt.figure(figsize=(10, 6))
     sns.set(style="whitegrid")
-    sns.boxplot(x='Winner', y='Average Vote ', data=df_plot, palette={0: 'blue', 1: 'red'})
+    sns.boxplot(x='Winner', y='Average Vote ', data=df_plot, palette=['blue', 'red'])
 
     plt.title('Distribution of Average Ratings for Oscar Winners and Non-Winners')
     plt.xlabel('Oscar Winner (1: Yes, 0: No)')
@@ -329,3 +327,30 @@ def plot_column_by_oscars_category(df, column,yscale):
     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
     plt.tight_layout()
     plt.show()
+
+def plot_monthly_movie_ratios(df, selected_genres = None):
+    """
+    Plot the ratio of movies selected for Oscar to total released over the months 
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the movie data with a "Release Month" column.
+        selected_genres (list): List of selected genres to filter the data.
+
+    Returns:
+        None
+    """
+    if selected_genres is None:
+        # Count the number of movies released in each month and sort by month index
+        month_ratios = df["Proportion"].value_counts().sort_index()
+
+        # Create a list of month names using the calendar library
+        month_names = [calendar.month_name[i] for i in range(1, 13)]
+
+        # Create a bar plot for the months
+        plt.figure(figsize=(10, 6))
+        sns.barplot(x=month_ratios.index, y=month_ratios.values)
+        plt.title(f"Number of movies released over the months")
+        plt.xlabel("Month")
+        plt.ylabel("Number of movies")
+        plt.xticks(range(12), month_names, rotation=45)  # You can adjust the rotation angle as per your preference
+        plt.show()
