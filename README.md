@@ -70,7 +70,20 @@ We clustered the percentage of winning movies for the release months to explore 
 
 Linked to question 4 (not included in our final analysis, see milestone 2 feedback):
 
-- Causal Analysis: Investigating the impact of specific actors on a film's success, including their influence on winning awards, expected box office revenue, and ratings. We also aim to generate actor groups based on genres and predict their probability of achieving success; Predicting the probability that one movie can win the Oscar Award given key factors including actors, movie language, country, and release month.
+**Exploration and Data Preprocessing:**
+- Dataset: Utilized the CBU movie dataset focusing on release dates, box office revenues, ratings, and genres. Utilized the MovieLens dataset for better ratings.
+- Normalization: Normalized box office revenues against yearly averages for fair comparison over time.
+
+**Analytical Approach:**
+- Ratings and Revenue Correlation: Examined the relationship between movie ratings and box office revenue.
+- Monthly and Genre-Based Analysis: Analyzed box office performance across different months and genres using visual tools like bar graphs and heatmaps.
+
+**Seasonal Analysis:**
+- Seasonal Trends: Investigated how ratings and box office revenues vary by season and genre.
+- 'Blockbuster Seasons' and 'Dump Months': Explored seasonal impacts on movie release strategies.
+
+**Statistical Techniques:**
+Propensity Score Estimation: Used logistic regression and nearest-neighbor matching to analyze the impact of release month on movie popularity, indicated by votes and ratings.
 
 ## Timeline:
 
