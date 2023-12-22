@@ -1,7 +1,8 @@
 # Cinematic Dynamics: Exploring Film Genres, Release Timing, and Success Factors
 
 Datastory
-Discover how the seasons shape the cinematic landscape by diving into our fascinating datastory. Follow this link to explore the captivating impact of time on the world of cinema.
+Discover how the seasons shape the cinematic landscape by diving into our fascinating datastory. Follow this link to explore the captivating impact of time on the world of cinema : [Timing is Everything](chemin/vers/la/page.md)
+
 ## Abstract:
 
 Our project delves into the dynamic landscape of film releases, investigating their adherence to seasonal trends, awards ceremonies, and the broader factors that contribute to their success. Our curiosity extends to understanding how various genres gain popularity across different regions and throughout the year. For example, the rarity of Christmas movies being released outside the holiday season and the strategic release of award-worthy films during periods like the Oscars intrigue us. By deciphering seasonal, locational, and success-based trends, we aim to examine how those factors influence its success, based on other factors such as awards, ratings, and box office revenue. Alongside movie and character metadata from Freebase, we use several additional datasets to encompass all necessary factors. This exploration will prove interesting for movie enthusiasts, as well as for film producers and distributors, who can leverage our findings to optimize their release strategies.
