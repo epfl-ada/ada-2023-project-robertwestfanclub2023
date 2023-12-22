@@ -680,3 +680,187 @@ def plot_column_by_oscars_category(df, column, yscale=False):
 ####################################################################################################
 # Research Questions 3
 ####################################################################################################
+
+def plot_monthly_votes_and_ratings(df):
+    """
+    Plot histograms of average vote and rating by month using Plotly.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame containing the data.
+
+    Returns:
+        None (displays the plot).
+    """
+
+    # Group by month and calculate average vote average and rating
+    monthly_votes = df.groupby('Release Month')['Average Vote '].mean()
+    monthly_ratings = df.dropna(subset=['Rating']).groupby('Release Month')["Rating"].mean()
+
+    # Create subplots with two y-axes
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    # Vote average on the left y-axis
+    fig.add_trace(
+        go.Bar(x=monthly_votes.index, y=monthly_votes.values, name='Vote Avg', marker_color='blue'),
+        secondary_y=False
+    )
+
+    # Rating on the right y-axis
+    fig.add_trace(
+        go.Bar(x=monthly_ratings.index, y=monthly_ratings.values, name='Rating', marker_color='red'),
+        secondary_y=True
+    )
+
+    # Update x-axis and y-axes labels
+    fig.update_xaxes(title_text='Month', tickvals=list(range(1, 13)),
+                     ticktext=[calendar.month_name[i] for i in range(1, 13)])
+    fig.update_yaxes(title_text='Vote Average', secondary_y=False)
+    fig.update_yaxes(title_text='Rating', secondary_y=True)
+
+    # Add layout details
+    fig.update_layout(
+        title='Average Vote Average and Rating by Month',
+        barmode='group'
+    )
+
+    # Show the plot
+    fig.show()
+
+def plot_adjusted_box_office_revenue(merged_df):
+    """
+    Plot a bar chart of the average adjusted box office revenue by month using Plotly.
+
+    Args:
+        merged_df (pd.DataFrame): The DataFrame containing the data.
+
+    Returns:
+        None (displays the plot).
+    """
+
+    # Create a bar plot using Plotly Express
+    fig = px.bar(
+        merged_df, 
+        x='Release Month', 
+        y='Ratio Revenue', 
+        labels={'Ratio Revenue': 'Average Adjusted Revenue'},
+        title='Average Adjusted Box Office Revenue by Month'
+    )
+
+    # Update layout for better readability
+    fig.update_layout(
+        xaxis_title='Month',
+        yaxis_title='Average Adjusted Revenue'
+    )
+
+    # Show the plot
+    fig.show()
+
+def plot_movie_metrics_evolution(yearly_data):
+    """
+    Plot a line chart showing the evolution of movie metrics over years using Plotly.
+
+    Args:
+        yearly_data (pd.DataFrame): The DataFrame containing the data.
+
+    Returns:
+        None (displays the plot).
+    """
+
+    # Create a line plot using Plotly Express
+    fig = px.line(
+        yearly_data, 
+        title='Evolution of Movie Metrics Over Years',
+        labels={'value': 'Average Values', 'variable': 'Metrics'}
+    )
+
+    # Update layout for better readability
+    fig.update_layout(
+        xaxis_title='Year',
+        yaxis_title='Average Values'
+    )
+
+    # Show the plot
+    fig.show()
+
+def plot_seasonal_votes_and_ratings(df):
+    """
+    Plot histograms of average vote average and rating by season using Plotly.
+
+    Args:
+        df (pd.DataFrame): The DataFrame containing the data.
+
+    Returns:
+        None (displays the plot).
+    """
+
+    # Group by season and calculate average vote average and rating
+    seasonal_votes = df.groupby('season')['Average Vote '].mean()
+    seasonal_ratings = df.groupby('season')['Rating'].mean()
+
+    # Create subplots with two y-axes
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    # Vote average on the left y-axis
+    fig.add_trace(
+        go.Bar(x=seasonal_votes.index, y=seasonal_votes.values, name='Vote Avg', marker_color='blue'),
+        secondary_y=False
+    )
+
+    # Rating on the right y-axis
+    fig.add_trace(
+        go.Bar(x=seasonal_ratings.index, y=seasonal_ratings.values, name='Rating', marker_color='red'),
+        secondary_y=True
+    )
+
+    # Update x-axis and y-axes labels
+    fig.update_xaxes(title_text='Season')
+    fig.update_yaxes(title_text='Vote Average', secondary_y=False)
+    fig.update_yaxes(title_text='Rating', secondary_y=True)
+
+    # Add layout details
+    fig.update_layout(
+        title='Average Vote Average and Rating by Season',
+        barmode='group'
+    )
+
+    # Show the plot
+    fig.show()
+
+def plot_rating_and_vote_vs_box_office(df):
+    """
+    Plot scatter plots for 'Rating' vs 'Box Office Revenue' and 'Vote Average' vs 'Box Office Revenue' using Plotly.
+
+    Args:
+        df (pd.DataFrame): The DataFrame containing the data.
+
+    Returns:
+        None (displays the plots).
+    """
+
+    # Calculate correlation coefficients
+    corr_rating = df['Rating'].corr(df['Movie box office revenue'])
+    corr_vote_average = df['Average Vote '].corr(df['Movie box office revenue'])
+
+    # Print the correlation coefficients
+    print("Correlation between Rating and Box Office Revenue:", corr_rating)
+    print("Correlation between Vote Average and Box Office Revenue:", corr_vote_average)
+
+    # Scatter plot for 'Rating' vs 'Movie box office revenue'
+    fig_rating = px.scatter(
+        df, 
+        x='Rating', 
+        y='Movie box office revenue', 
+        title='Rating vs Box Office Revenue',
+        labels={'Rating': 'Rating', 'Movie box office revenue': 'Box Office Revenue'}
+    )
+    fig_rating.show()
+
+    # Scatter plot for 'Vote Average' vs 'Movie box office revenue'
+    fig_vote = px.scatter(
+        df, 
+        x='Average Vote ', 
+        y='Movie box office revenue', 
+        title='Vote Average vs Box Office Revenue',
+        labels={'Average Vote ': 'Vote Average', 'Movie box office revenue': 'Box Office Revenue'}
+    )
+    fig_vote.show()
