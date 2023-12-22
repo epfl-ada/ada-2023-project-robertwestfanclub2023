@@ -1,7 +1,7 @@
 # Cinematic Dynamics: Exploring Film Genres, Release Timing, and Success Factors
 
 Datastory
-Discover how the seasons shape the cinematic landscape by diving into our fascinating datastory. Follow this link to explore the captivating impact of time on the world of cinema : [Timing is Everything](chemin/vers/la/page.md)
+Discover how the seasons shape the cinematic landscape by diving into our fascinating datastory. Follow this link to explore the captivating impact of time on the world of cinema : [Timing is Everything]([chemin/vers/la/page.md](https://scherkao31.github.io/timing_is_everything/))
 
 ## Abstract:
 
