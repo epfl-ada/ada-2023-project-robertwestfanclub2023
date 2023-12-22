@@ -255,51 +255,53 @@ def filter_dataframe_by_threshold(df, threshold=200):
     # Filter the original DataFrame, keeping only years above the threshold
     filtered_df = df[df['Release Year'] > int(last_false_index)]
     
-    # Create a histogram of counts by release year
-    fig = px.bar(grouped, x='Release Year', y='Counts', orientation='v', 
-                 title='Histogram of Counts by Release Year')
-    fig.update_xaxes(title_text='Release Year')
-    fig.update_yaxes(title_text='Counts')
-    fig.show()
-    
     return filtered_df
+
+def plot_histogram_by_release_year(df):
+    """
+    Plot a histogram of counts by release year.
+
+    Args:
+        df (pd.DataFrame): The input DataFrame containing the data.
+
+    Returns:
+        None
+    """
+    grouped = df.groupby(['Release Year']).size().reset_index(name='Counts')
+    
+    plt.figure(figsize=(10, 6))
+    plt.bar(grouped['Release Year'], grouped['Counts'], color='darkblue')
+    plt.xlabel("Release Year")
+    plt.ylabel("Counts")
+    plt.title('Histogram of Counts by Release Year')
+    plt.show()
+    
 
 ####################################################################
 # Comprehensive Seasonality Analysis Across All Genres and Locations
 ####################################################################
 
-def plot_monthly_average(df_mean_month, color='#636EFA', html_file_path_name = "images/1_mean_percent_release_month_histo.html"):
+def plot_monthly_average(df_mean_month):
     """
-    Plot a bar chart showing the monthly average percentage of movies released using Plotly.
+    Plot the monthly average of the percentage of movies released in a given month.
 
-    Args:
-        df_mean_month (pd.DataFrame): DataFrame containing the mean percentage of movies released in each month.
-        color (str): Hex color code for the bars in the plot.
+    Parameters:
+    df_mean_month (DataFrame): A DataFrame containing the monthly mean percentage data.
 
     Returns:
-        None
+    None
     """
-
     # Create a list of month names using the calendar library
     month_names = [calendar.month_abbr[i] for i in range(1, 13)]
 
-    # Create a DataFrame for Plotly
-    plot_data = pd.DataFrame({
-        'Month': month_names,
-        'Mean Percentage': df_mean_month['Percentage']
-    })
+    # Create a bar plot for the months
+    plt.figure(figsize=(10, 6))
+    plt.bar(range(12), df_mean_month['Percentage'], color='darkblue')
+    plt.xlabel("Release Month")
+    plt.ylabel("Mean of the percentage of movies released in a given month (%)")
+    plt.xticks(range(12), month_names, rotation=45)  
+    plt.show()
 
-    # Create a bar plot for the months using Plotly
-    fig = px.bar(plot_data, x='Month', y='Mean Percentage', title='Monthly Average Percentage of Movies Released',
-                 color_discrete_sequence=[color])
-
-    # Customize the layout
-    fig.update_layout(xaxis_title='Release Month', yaxis_title='Mean Percentage (%)')
-    
-    to_html(fig, html_file_path_name)
-
-    # Show the plot
-    fig.show()
 
 def plot_acf_custom(data, max_lags=240, y_min=-0.2, y_max=1.0):
     """
@@ -338,51 +340,58 @@ def plot_acf_custom(data, max_lags=240, y_min=-0.2, y_max=1.0):
     plt.tight_layout()
     plt.show()
 
-def plot_seasonal_decomposition(df_past, df_recent, color='darkblue', html_file_path_name = "images/1_season_decomposition.html"):
+def plot_seasonal_decomposition(df_past, df_recent):
     """
-    Perform seasonal decomposition and plot the results for past and recent datasets using Plotly.
+    Perform seasonal decomposition and plot the results for past and recent datasets.
 
     Args:
         df_past (pd.DataFrame): DataFrame containing past years' time series data.
         df_recent (pd.DataFrame): DataFrame containing recent years' time series data.
-        color (str): Color for the plot lines.
 
     Returns:
-        Tuple: Decomposition results for past and recent data.
+        None
     """
-    # Seasonal decomposition
+    # Perform multiplicative seasonal decomposition on the 'Counts' column with a period of 12 (monthly data) for the 'df_past' dataset
     result_past = seasonal_decompose(df_past['Counts'], model='multiplicative', period=12)
+
+    # Perform multiplicative seasonal decomposition on the 'Counts' column with a period of 12 (monthly data) for the 'df_recent' dataset
     result_recent = seasonal_decompose(df_recent['Counts'], model='multiplicative', period=12)
 
-    # Create subplots
-    fig = make_subplots(rows=4, cols=2, subplot_titles=("Past Years Original", "Recent Years Original",
-                                                        "Past Years Trend", "Recent Years Trend",
-                                                        "Past Years Seasonal", "Recent Years Seasonal",
-                                                        "Past Years Residuals", "Recent Years Residuals"))
+    # Create subplots for 'df_past' and 'df_recent'
+    fig, axes = plt.subplots(4, 2, figsize=(12, 12))
+    fig.suptitle("Seasonal Decomposition for Past and Recent Years", fontsize=16)
 
-    # Plotting for 'df_past'
-    fig.add_trace(go.Scatter(x=df_past.index, y=df_past['Counts'], mode='lines', name='Original', line=dict(color=color)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=df_past.index, y=result_past.trend, mode='lines', name='Trend', line=dict(color=color)), row=2, col=1)
-    fig.add_trace(go.Scatter(x=df_past.index, y=result_past.seasonal, mode='lines', name='Seasonal', line=dict(color=color)), row=3, col=1)
-    fig.add_trace(go.Scatter(x=df_past.index, y=result_past.resid, mode='lines', name='Residuals', line=dict(color=color)), row=4, col=1)
+    # Plotting the decomposed components for 'df_past'
+    colors_past = ['darkblue', 'darkblue', 'darkblue', 'darkblue']  
+    axes[0, 0].plot(df_past['Counts'], color=colors_past[0], label='Original')
+    axes[1, 0].plot(result_past.trend, color=colors_past[1], label='Trend')
+    axes[2, 0].plot(result_past.seasonal, color=colors_past[2], label='Seasonal')
+    axes[3, 0].plot(result_past.resid, color=colors_past[3], label='Residuals')
 
-    # Plotting for 'df_recent'
-    fig.add_trace(go.Scatter(x=df_recent.index, y=df_recent['Counts'], mode='lines', name='Original', line=dict(color=color)), row=1, col=2)
-    fig.add_trace(go.Scatter(x=df_recent.index, y=result_recent.trend, mode='lines', name='Trend', line=dict(color=color)), row=2, col=2)
-    fig.add_trace(go.Scatter(x=df_recent.index, y=result_recent.seasonal, mode='lines', name='Seasonal', line=dict(color=color)), row=3, col=2)
-    fig.add_trace(go.Scatter(x=df_recent.index, y=result_recent.resid, mode='lines', name='Residuals', line=dict(color=color)), row=4, col=2)
+    axes[0, 0].set_title('Past Years Original Data', fontsize=14)
+    axes[1, 0].set_title('Past Years Decomposition (Trend)', fontsize=14)
+    axes[2, 0].set_title('Past Years Decomposition (Seasonal)', fontsize=14)
+    axes[3, 0].set_title('Past Years Decomposition (Residuals)', fontsize=14)
 
-    # Update layout
-    fig.update_layout(height=800, width=1000, title_text="Seasonal Decomposition for Past and Recent Years", showlegend=False)
-    fig.update_xaxes(title_text="Time", row=4, col=1)
-    fig.update_xaxes(title_text="Time", row=4, col=2)
-    fig.update_yaxes(title_text="Value", col=1)
-    fig.update_yaxes(title_text="Value", col=2)
+    # Plotting the decomposed components for 'df_recent'
+    colors_recent = ['darkblue', 'darkblue', 'darkblue', 'darkblue']
+    axes[0, 1].plot(df_recent['Counts'], color=colors_recent[0], label='Original')
+    axes[1, 1].plot(result_recent.trend, color=colors_recent[1], label='Trend')
+    axes[2, 1].plot(result_recent.seasonal, color=colors_recent[2], label='Seasonal')
+    axes[3, 1].plot(result_recent.resid, color=colors_recent[3], label='Residuals')
 
-    to_html(fig, html_file_path_name)
+    axes[0, 1].set_title('Recent Years Original Data', fontsize=14)
+    axes[1, 1].set_title('Recent Years Decomposition (Trend)', fontsize=14)
+    axes[2, 1].set_title('Recent Years Decomposition (Seasonal)', fontsize=14)
+    axes[3, 1].set_title('Recent Years Decomposition (Residuals)', fontsize=14)
 
-    # Show the plot
-    fig.show()
+    for ax in axes.ravel():
+        ax.legend()
+        ax.grid()
+
+    plt.tight_layout()
+    plt.subplots_adjust(top=0.9)  
+    plt.show()
 
     return result_past, result_recent
 
@@ -435,72 +444,49 @@ def plot_seasonal_components(result_past, result_recent):
 
 def plot_genre_month_percentage(df_year):
     """
-    Plots the percentage of movie releases by month for different genres in a Plotly format
+    Plots the percentage of movie releases by month for different genres.
 
     Args:
         df_year (DataFrame): The DataFrame containing movie data.
 
     Returns:
-        A Plotly figure object.
+        None
     """
-    # Define a color map for continents
-    color_map = {
-        'Asia': 'blue',
-        'Europe': 'red',
-        'North America': 'green'
-    }
+    # Suppress user warnings
+    warnings.filterwarnings("ignore")
 
     # Find unique movie genres in the DataFrame
     genres = df_year['Movie genres'].unique()
 
-    # Create a subplot figure with one row for each genre
-    fig = make_subplots(rows=len(genres), cols=1, subplot_titles=[f'Percentage by Month for {genre}' for genre in genres])
-
-    first_genre = True
+    # Create a figure with appropriate size for all subplots
+    plt.figure(figsize=(15, 5 * len(genres)))
 
     # Loop through each genre to create a bar plot
     for i, genre in enumerate(genres):
+        # Create a subplot for each genre
+        plt.subplot(len(genres), 1, i + 1)
+
         # Filter the DataFrame for the current genre
         df_genre = df_year[df_year['Movie genres'] == genre]
 
-        # Create a bar plot for each continent within the current genre
-        for continent in df_genre['Movie Continent'].unique():
-            df_continent = df_genre[df_genre['Movie Continent'] == continent]
-            # Group by 'Release Month' and calculate the mean percentage
-            df_grouped = df_continent.groupby('Release Month')['Percentage'].mean().reset_index()
+        # Create the bar plot using seaborn
+        sns.barplot(data=df_genre, x='Release Month', y='Percentage', hue='Movie Continent', errorbar=None)
 
-            # Add trace to the subplot for the current genre
-            fig.add_trace(
-                go.Bar(
-                    x=[calendar.month_abbr[month] for month in df_grouped['Release Month']],
-                    y=df_grouped['Percentage'],
-                    name=continent,
-                    marker_color=color_map[continent],  # Use the color map for consistent colors
-                    showlegend=first_genre  # Show legend only for the first genre
-                ),
-                row=i+1,
-                col=1
-            )
+        # Set the x-axis labels to month abbreviations
+        month_names = [calendar.month_abbr[i] for i in range(1, 13)]
+        plt.xticks(range(12), month_names)
 
-        # After the first genre, set this to False so that legends are not duplicated
-        first_genre = False
+        # Add a title to the subplot
+        plt.title(f'Percentage by Month for {genre}')
 
-    # Update layout for a cleaner look
-    fig.update_layout(
-        height=300 * len(genres),
-        title_text="Movie Release Distribution by Genre and Month",
-        barmode='group'
-    )
+        # Add the legend in the upper right corner
+        plt.legend(loc='upper right')
 
-    # Adjust x-axis and y-axis titles
-    for i in range(len(genres)):
-        fig['layout'][f'xaxis{i+1}'].update(title='Release Month')
-        fig['layout'][f'yaxis{i+1}'].update(title='Percentage')
+        # Adjust subplots automatically to fit within the figure
+        plt.tight_layout()
 
-    # Set legend position
-    fig.update_layout(legend=dict(orientation="v", yanchor="bottom", y=0.95, xanchor="right", x=1.3))
-
-    return fig
+    # Show the plots
+    plt.show()
 
 def calculate_correlations(df, number_years=4):
     """
