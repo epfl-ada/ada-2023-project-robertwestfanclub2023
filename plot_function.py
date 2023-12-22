@@ -1,49 +1,32 @@
 ####################################################################################################
 # IMPORTS
 ####################################################################################################
+# Standard libraries
+import calendar
 
-# Pandas import
-import pandas as pd
-
-# Numpy import
+# Third-party libraries
 import numpy as np
-
-# Seaborn import
-import seaborn as sns
-
-# Matplotlib import
-import matplotlib.pyplot as plt
-
-# Calendar import
-import calendar
-
-# Plotly Express imports
-import plotly.express as px
-
-# Pandas imports
 import pandas as pd
-
-# Calendar import
-import calendar
-
-# Seaborn import
 import seaborn as sns
-
-# Matplotlib import
 import matplotlib.pyplot as plt
+import warnings
 
-# Statsmodels autocorrelation function import
-from statsmodels.tsa.stattools import acf
-
-
+# Plotly imports
+import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+
+# Statsmodels imports
+from statsmodels.tsa.stattools import acf
+from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+from plotly.offline import plot
 
 #####
 # To save as html
 #####
 
-from plotly.offline import plot
 def to_html(fig, html_file_path):
     # Generate the HTML elements to embed the plot
     div = plot(fig, output_type='div', include_plotlyjs=True)
@@ -115,7 +98,6 @@ def plot_month_release_availability(df):
 # Exploratory functions
 #########################################
 
-
 def filter_movies_by_genres(df, selected_genres):
     """
     Filter a DataFrame of movies based on selected genres.
@@ -131,7 +113,6 @@ def filter_movies_by_genres(df, selected_genres):
     df_filter = df[df['Movie genres'].isin(selected_genres)]
 
     return df_filter
-
 
 def plot_monthly_movie_counts(df, selected_genres = None):
     """
@@ -206,8 +187,6 @@ def create_genre_pie_chart(df_filter):
 
     plt.show()
 
-
-
 def plot_movie_continent_distribution(df):
     """
     Plot a pie chart to visualize the distribution of movies by continent in a DataFrame.
@@ -252,10 +231,6 @@ def plot_movie_continent_distribution(df):
     # Show the plot
     plt.show()
 
-
-import pandas as pd
-import plotly.express as px
-
 def filter_dataframe_by_threshold(df, threshold=200):
     """
     Filter a DataFrame based on a specified threshold for the count ('Counts') per release year ('Release Year').
@@ -293,10 +268,6 @@ def filter_dataframe_by_threshold(df, threshold=200):
 # Comprehensive Seasonality Analysis Across All Genres and Locations
 ####################################################################
 
-
-import calendar
-import matplotlib.pyplot as plt
-
 def plot_monthly_average(df_mean_month, color='#636EFA', html_file_path_name = "images/1_mean_percent_release_month_histo.html"):
     """
     Plot a bar chart showing the monthly average percentage of movies released using Plotly.
@@ -329,9 +300,6 @@ def plot_monthly_average(df_mean_month, color='#636EFA', html_file_path_name = "
 
     # Show the plot
     fig.show()
-
-import matplotlib.pyplot as plt
-from statsmodels.graphics.tsaplots import plot_acf
 
 def plot_acf_custom(data, max_lags=240, y_min=-0.2, y_max=1.0):
     """
@@ -369,11 +337,6 @@ def plot_acf_custom(data, max_lags=240, y_min=-0.2, y_max=1.0):
 
     plt.tight_layout()
     plt.show()
-
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.tsa.seasonal import seasonal_decompose
-
 
 def plot_seasonal_decomposition(df_past, df_recent, color='darkblue', html_file_path_name = "images/1_season_decomposition.html"):
     """
@@ -417,11 +380,11 @@ def plot_seasonal_decomposition(df_past, df_recent, color='darkblue', html_file_
     fig.update_yaxes(title_text="Value", col=2)
 
     to_html(fig, html_file_path_name)
+
     # Show the plot
     fig.show()
 
     return result_past, result_recent
-
 
 def plot_seasonal_components(result_past, result_recent):
     """
@@ -465,20 +428,14 @@ def plot_seasonal_components(result_past, result_recent):
     plt.tight_layout()
     plt.show()
 
-import warnings
-import calendar
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 ####################################################################
 # Comprehensive Seasonality Analysis Across All Genres and Locations
 ####################################################################
 
-
 def plot_genre_month_percentage(df_year):
     """
-    Plots the percentage of movie releases by month for different genres in a Plotly format with fixed colors for continents
-    and a single legend on the top right of the plot.
+    Plots the percentage of movie releases by month for different genres in a Plotly format
 
     Args:
         df_year (DataFrame): The DataFrame containing movie data.
@@ -491,7 +448,6 @@ def plot_genre_month_percentage(df_year):
         'Asia': 'blue',
         'Europe': 'red',
         'North America': 'green'
-        # Add more continents and colors as needed
     }
 
     # Find unique movie genres in the DataFrame
@@ -500,7 +456,6 @@ def plot_genre_month_percentage(df_year):
     # Create a subplot figure with one row for each genre
     fig = make_subplots(rows=len(genres), cols=1, subplot_titles=[f'Percentage by Month for {genre}' for genre in genres])
 
-    # This variable will help us to show the legend only for the first set of bars
     first_genre = True
 
     # Loop through each genre to create a bar plot
@@ -547,12 +502,6 @@ def plot_genre_month_percentage(df_year):
 
     return fig
 
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from statsmodels.tsa.stattools import acf
-
 def calculate_correlations(df, number_years=4):
     """
     Calculate correlations for a given number of years using the provided DataFrame.
@@ -570,7 +519,6 @@ def calculate_correlations(df, number_years=4):
     for continent in df['Movie Continent'].unique():
         for genre in df['Movie genres'].unique():
             data = df[(df['Movie genres'] == genre) & (df['Movie Continent'] == continent)]
-            lag_label = f'{number_years} years ({number_years * 12} months)'
 
             for lag in range(1, number_years + 1):
                 acf_vals = acf(data['Counts'], nlags=lag * 12)
@@ -611,8 +559,15 @@ def plot_correlation_heatmap(df, number_years=4):
     plt.title(f'Correlation Heatmap ({number_years} Year Lag)')
     plt.show()
 
-
 def plot_seasonality_heatmap(decomposition_results):
+    """
+    Plot a heatmap for seasonality factors of movies across genres and continents.
+
+    Parameters:
+    decomposition_results (DataFrame): A DataFrame containing the decomposed components of seasonality
+                                      with 'Movie genres', 'Movie Continent', and 'Release Month' as columns.
+
+    """
     # Pivot the data to create a matrix suitable for a heatmap
     heatmap_data = decomposition_results.pivot_table(values='Seasonality', index=['Movie genres', 'Movie Continent'], columns='Release Month')
     heatmap_data.columns = [calendar.month_abbr[i] for i in range(1, 13)]
@@ -625,137 +580,11 @@ def plot_seasonality_heatmap(decomposition_results):
     plt.xlabel('Release Month')
     plt.show()
 
-
 ####################################################################################################
 # Research Questions 2
 ####################################################################################################
 
 
-
-def plot_award_distribution(df, str):
-    """
-    Plot the pie chart for award dataset
-
-    Args:
-        df (pd.DataFrame): DataFrame containing the movie data with a "Release Month" column.
-        str: string to control the output display
-
-    Returns:
-        None
-    """
-
-    country_counts = df['Movie '+str].value_counts()
-
-    # Select the top 10 countries
-    top_countries = country_counts[:5]
-
-    # Sum up the rest of the countries
-    other_countries_count = country_counts[5:].sum()
-
-    # Add the 'Others' category to the top countries
-    top_countries['Others'] = other_countries_count
-
-    # Explode the top 2 countries
-    explode = [0.1 if i < 2 else 0 for i in range(len(top_countries))]
-
-    # Plotting the distribution
-    fig, ax = plt.subplots(figsize=(8, 8))
-    wedges, texts = ax.pie(top_countries, startangle=90, explode=explode, labels=top_countries.index, pctdistance=0.8, textprops=dict(color="w"))
-
-    # Adding labels and title
-    plt.axis('equal')
-    plt.title('Distribution of Movie '+str)
-
-    # Creating a legend with percentage labels
-    legend_labels = [f"{label} ({value} movies, {percentage:.1f}%)"
-                     for label, value, percentage in zip(top_countries.index, top_countries.values, top_countries.values / top_countries.values.sum() * 100)]
-
-    plt.legend(wedges, legend_labels, title=str.capitalize(), loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-
-    # Display the plot
-    plt.show()
-
-
-def plot_ratings_oscars(df):
-
-    df_plot = df[['Winner', 'Average Vote ']].copy() 
-
-    df_plot['Winner'] = df_plot['Winner'].astype(int)
-    df_plot['Average Vote '] = df_plot['Average Vote '].astype(float)
-
-    # Plot using seaborn
-    
-    plt.figure(figsize=(10, 6))
-    sns.set(style="whitegrid")
-    sns.boxplot(x='Winner', y='Average Vote ', data=df_plot, palette=['blue', 'red'])
-
-    plt.title('Distribution of Average Ratings for Oscar Winners and Non-Winners')
-    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
-    plt.ylabel('Average Ratings')
-    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
-    plt.show()
-
-
-
-def plot_box_office_oscars(df):
-
-    df_plot = df[['Winner Binary', 'Movie box office revenue']].copy() 
-
-    # Plot using seaborn
-
-    plt.figure(figsize=(10, 6))
-    sns.set(style="whitegrid")
-    sns.boxplot(x='Winner Binary', y='Movie box office revenue', data=df_plot, palette=['blue', 'red'])
-
-    plt.title('Distribution of Box Office Revenue for Oscar Winners and Non-Winners')
-    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
-    plt.ylabel('Box Office Revenue')
-    plt.yscale('log')  # Set y-axis to log scale
-    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
-    plt.show()
-
-
-
-def plot_column_by_oscars_category(df, column,yscale):
-    """
-    Plots a box plot of the box office revenue for Oscar-winning movies in each category.
-
-    Parameters:
-    df (DataFrame): The input DataFrame containing movie data.
-    column (String): the column to plot
-    yscale (Boolean): whether to use log scale for y-axis
-    Returns:
-    None
-    """
-
-    # Filter the DataFrame for movies that have won Oscars and have non-NaN box office revenue
-    df_oscar_winners = df[(df['Winner'] == 1) & (~df[column].isna())]
-
-    # Filter out categories with fewer than a certain threshold of movies
-    category_threshold = 5  # Adjust as needed
-    category_counts = df_oscar_winners['Category'].value_counts()
-    valid_categories = category_counts[category_counts >= category_threshold].index
-    df_oscar_winners_filtered = df_oscar_winners[df_oscar_winners['Category'].isin(valid_categories)]
-
-    # Calculate mean box office revenue for each category and sort by mean in ascending order
-    mean_revenue_by_category = df_oscar_winners_filtered.groupby('Category')[column].mean().sort_values(ascending=True)
-
-    # Set up the plot
-    sns.set(style="whitegrid")
-    plt.figure(figsize=(12, 8))
-    if yscale:
-        plt.yscale('log')  # Set y-axis to log scale for better visualization
-
-    # Create the box plot for each category, sorted by mean box office revenue
-    sns.boxplot(x='Category', y=column, data=df_oscar_winners_filtered,
-                order=mean_revenue_by_category.index, palette='Set1')
-
-    plt.title(f'{column} for Oscar Winners in Each Category (Filtered)')
-    plt.xlabel('Oscar Category')
-    if yscale:
-        plt.ylabel(f'{column} (log scale)')
-    else:
-        plt.ylabel(column)
-    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
-    plt.tight_layout()
-    plt.show()
+####################################################################################################
+# Research Questions 3
+####################################################################################################

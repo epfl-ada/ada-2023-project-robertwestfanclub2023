@@ -3,26 +3,17 @@
 # IMPORTS
 ####################################################################################################
 
-# Pandas import
+# Standard libraries
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
-# TQDM import for progress bars
+# Third-party libraries
 import tqdm
 from tqdm import tqdm
-
-# Pycountry convert import for country code conversion
 import pycountry_convert as pc
-
-# Numpy import
-import numpy as np
-
-# Pandas imports
-import pandas as pd
-
-import pandas as pd
 from scipy.stats import ttest_ind, pearsonr
-import numpy as np
-
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 ####################################################################################################
 # Data Cleaning and Preprocessing
@@ -50,7 +41,6 @@ def get_path(url):
 
     """
     return "https://drive.google.com/uc?id=" + url.split("/")[-2]
-
 
 def save_dataframe_to_csv(dataframe, file_path):
     """
@@ -119,7 +109,6 @@ def preprocess_dict(row):
     row['Movie genres'] = movie_genres
 
     return row
-
 
 def update_release_month_and_day(df):
     """
@@ -192,7 +181,6 @@ def extract_date_info_and_update_df(df_movie):
 
     return df_movie
 
-
 def process_movie_data(df_movie, save_to_path=None):
     """
     Process a movie dataset DataFrame and extract information about countries, genres, languages, and release dates.
@@ -244,7 +232,6 @@ def process_movie_data(df_movie, save_to_path=None):
 
     return df_process
 
-
 def country_to_continent(country_name):
     """
     Converts a country name to its continent name.
@@ -287,11 +274,9 @@ def assign_movie_continents(df):
 
     return df
 
-
 ####################################################################################################
 # Research Questions 1
 ####################################################################################################
-
 
 #########################################
 # Exploratory and preprocessing functions
@@ -377,18 +362,30 @@ def calculate_canova_hansen_test(df_year, ch_test):
 
     return results_df
 
-import matplotlib.pyplot as plt
-from statsmodels.tsa.seasonal import seasonal_decompose
-
 def perform_seasonal_decomposition(df):
+    """
+    Perform seasonal decomposition on movie data.
+
+    Parameters:
+        df (DataFrame): A pandas DataFrame containing movie data with columns including 'Release Month',
+                        'Movie genres', 'Movie Continent', 'Counts', 'Percentage', and 'Release Year'.
+
+    Returns:
+        DataFrame: A DataFrame containing seasonal decomposition results including 'Release Month', 'Movie genres',
+                   'Movie Continent', 'Counts', 'Percentage', and 'Seasonality'.
+
+    """
     decomposition_results = pd.DataFrame(columns=['Release Month', 'Movie genres', 'Movie Continent', 'Counts', 'Percentage', 'Seasonality'])
 
     for continent in df['Movie Continent'].unique():
         for genre in df['Movie genres'].unique():
+            # Filter data by continent, genre, and release year
             data = df[(df['Movie genres'] == genre) & (df['Movie Continent'] == continent) & (df['Release Year'] >= 2000)]
 
+            # Perform seasonal decomposition on the 'Percentage' column
             decomposition = seasonal_decompose(data['Percentage'], model='multiplicative', period=12)
             
+            # Create a DataFrame to store decomposition results
             decomposition_df = pd.DataFrame({
                 'Release Month': data['Release Month'],
                 'Movie genres': genre,
@@ -398,6 +395,7 @@ def perform_seasonal_decomposition(df):
                 'Seasonality': decomposition.seasonal,
             })
 
+            # Concatenate decomposition results to the final DataFrame
             decomposition_results = pd.concat([decomposition_results, decomposition_df], axis=0)
 
     return decomposition_results
@@ -406,74 +404,3 @@ def perform_seasonal_decomposition(df):
 # Research Questions 2
 ####################################################################################################
 
-
-def top_k_with_oscars(df, k, feature, ascending=False):
-    """
-    Returns top k rows of a feature from a movie with an Oscars.
-
-    Parameters
-    ----------
-    df: pandas dataframe
-        The dataframe you want to find top k rows from
-    k: int
-        The number of rows you want to return
-    feature: string
-        The column you want to find top k rows from
-
-    Returns
-    -------
-    df: pandas dataframe
-        The dataframe with top k rows with most oscars in column
-
-    """
-    # Filter the dataset for movies that have won an Oscar
-    winning_movies = df[df['Winner'] == 1]
-
-    sorted = winning_movies.sort_values(feature, ascending=ascending).head(k)
-    for index, movie in sorted.iterrows():
-        print(f"Movie: {movie['Movie name']}")
-        print(f"Year: {movie['Movie Year']}")
-        print(f"Category: {movie['Category']}")
-        print(f"{feature}: {movie[feature]:.2f}")
-        print("---")
-
-def t_test_and_correlation_on_winner_vs_col(df, column):
-    """
-    Perform a t-test and correlation analysis on a column of a DataFrame compared to its oscars win.
-
-    Parameters:
-    df (DataFrame): The DataFrame containing the data.
-    column (str): The name of the column to analyze.
-
-    Returns:
-    None
-    """
-        
-    # Select relevant columns for the analysis
-    columns_to_test = [column, 'Winner']
-
-    # Create a subset DataFrame with the selected columns
-    df_test = df[columns_to_test].copy()
-
-    # Convert 'Winner' column to numeric (True/False to 1/0)
-    df_test['Winner'] = df_test['Winner'].astype(int)
-
-    # Remove rows with missing or infinite values
-    df_test = df_test.replace([np.inf, -np.inf], np.nan)
-    df_test = df_test.dropna(subset=[column])
-
-    # Split the data into two groups based on Oscar win
-    winner = df_test[df_test['Winner'] == 1][column]
-    loser = df_test[df_test['Winner'] == 0][column]
-
-    # Perform the independent two-sample t-test
-    statistic, p_value = ttest_ind(winner, loser, nan_policy='omit')
-
-    # Perform correlation analysis between box office revenue and the number of Oscars won
-    correlation_coefficient, correlation_p_value = pearsonr(df_test[column], df_test['Winner'])
-
-    # Display the statistical test and correlation values
-    print(f'T-test statistic: {statistic}')
-    print(f'T-test p-value: {p_value}')
-    print(f'Correlation coefficient: {correlation_coefficient}')
-    print(f'Correlation p-value: {correlation_p_value}')
