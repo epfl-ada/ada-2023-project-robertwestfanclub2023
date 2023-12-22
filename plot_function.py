@@ -584,6 +584,98 @@ def plot_seasonality_heatmap(decomposition_results):
 # Research Questions 2
 ####################################################################################################
 
+def plot_box_office_oscars(df):
+    """
+    Plot a box plot to visualize the distribution of box office revenue for Oscar winners and non-winners.
+
+    Parameters:
+        df (DataFrame): A pandas DataFrame containing movie data, including the 'Winner Binary' column (1 for winners,
+                        0 for non-winners) and 'Movie box office revenue'.
+
+    """
+    df_plot = df[['Winner Binary', 'Movie box office revenue']].copy()
+
+    # Plot using seaborn
+    plt.figure(figsize=(10, 6))
+    sns.set(style="whitegrid")
+    sns.boxplot(x='Winner Binary', y='Movie box office revenue', data=df_plot, palette=['blue', 'red'])
+
+    plt.title('Distribution of Box Office Revenue for Oscar Winners and Non-Winners')
+    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
+    plt.ylabel('Box Office Revenue')
+    plt.yscale('log')  # Set y-axis to log scale
+    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
+    plt.show()
+
+def plot_ratings_oscars(df):
+    """
+    Plot a box plot to visualize the distribution of average ratings for Oscar winners and non-winners.
+
+    Parameters:
+        df (DataFrame): A pandas DataFrame containing movie data, including the 'Winner' column (1 for winners,
+                        0 for non-winners) and 'Average Vote' for average ratings.
+
+    """
+    df_plot = df[['Winner', 'Average Vote ']].copy()
+
+    df_plot['Winner'] = df_plot['Winner'].astype(int)
+    df_plot['Average Vote '] = df_plot['Average Vote '].astype(float)
+
+    # Plot using seaborn
+    plt.figure(figsize=(10, 6))
+    sns.set(style="whitegrid")
+    sns.boxplot(x='Winner', y='Average Vote ', data=df_plot, palette=['blue', 'red'])
+
+    plt.title('Distribution of Average Ratings for Oscar Winners and Non-Winners')
+    plt.xlabel('Oscar Winner (1: Yes, 0: No)')
+    plt.ylabel('Average Ratings')
+    plt.xticks(ticks=[0, 1], labels=['No', 'Yes'])
+    plt.show()
+
+def plot_column_by_oscars_category(df, column, yscale=False):
+    """
+    Plots a box plot of the specified column for Oscar-winning movies in each category.
+
+    Parameters:
+        df (DataFrame): The input DataFrame containing movie data.
+        column (str): The name of the column to plot.
+        yscale (bool, optional): Whether to use a log scale for the y-axis (default is False).
+
+    Returns:
+        None
+
+     """
+    # Filter the DataFrame for movies that have won Oscars and have non-NaN values in the specified column
+    df_oscar_winners = df[(df['Winner'] == 1) & (~df[column].isna())]
+
+    # Filter out categories with fewer than a certain threshold of movies
+    category_threshold = 5  # Adjust as needed
+    category_counts = df_oscar_winners['Category'].value_counts()
+    valid_categories = category_counts[category_counts >= category_threshold].index
+    df_oscar_winners_filtered = df_oscar_winners[df_oscar_winners['Category'].isin(valid_categories)]
+
+    # Calculate the mean of the specified column for each category and sort by mean in ascending order
+    mean_column_by_category = df_oscar_winners_filtered.groupby('Category')[column].mean().sort_values(ascending=True)
+
+    # Set up the plot
+    sns.set(style="whitegrid")
+    plt.figure(figsize=(12, 8))
+    if yscale:
+        plt.yscale('log')  # Set y-axis to log scale for better visualization
+
+    # Create the box plot for each category, sorted by mean column values
+    sns.boxplot(x='Category', y=column, data=df_oscar_winners_filtered,
+                order=mean_column_by_category.index, palette='Set1')
+
+    plt.title(f'Distribution of {column} for Oscar Winners in Each Category (Filtered)')
+    plt.xlabel('Oscar Category')
+    if yscale:
+        plt.ylabel(f'{column} (log scale)')
+    else:
+        plt.ylabel(column)
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+    plt.tight_layout()
+    plt.show()
 
 ####################################################################################################
 # Research Questions 3
