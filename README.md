@@ -33,17 +33,16 @@ This question was considered too broad to include in our analysis, so we decided
 
 ### Research Question 1:
 
-
-1. **Exploration and Data Preprocessing**:
+**Exploration and Data Preprocessing**:
    - Calculation of monthly averages of film releases across all genres and locations.
    - Use of bar charts to understand the distribution of film releases throughout the year.
 
-2. **Comprehensive Seasonality Analysis**:
+**Comprehensive Seasonality Analysis**:
    - Examination of seasonality in film releases without genre or location bias.
    - Utilization of the Canova-Hansen Test to assess the stability of seasonal patterns.
    - Autocorrelation analysis to understand the persistence of seasonal patterns over time.
 
-3. **Detailed Study by Genre and Location**:
+**Detailed Study by Genre and Location**:
    - Analysis of the most recent decade to study seasonal patterns in different film genres and locations.
    - Histogram analysis and Canova-Hansen Testing to understand the dynamics of cinematic releases by month, genre, and location.
    - Heatmap visualization to identify and compare seasonal patterns across different genres and regions.
