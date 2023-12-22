@@ -80,6 +80,6 @@ Milestone 3:
 
 - Léa: Data preprocessing and analysis of research question 1
 - Yanruiqi: Analysis of research question 2 (seasonal and locational influences on winning Oscar) 
-- Pierre-Hadrien: Analysis of research question 2 (impact of movies' success and other factors on their chances of winning an Oscar
+- Pierre-Hadrien: README maintenance and analysis of research question 2 (impact of movies' success and other factors on their chances of winning an Oscar)
 - Jason: Analysis of research question 3
 - Salim: Use of the IMDb ratings, analysis of research question 3, and data story webpage deployment
