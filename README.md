@@ -32,6 +32,10 @@ This question was considered to broad to include in our analysis, se we decided 
 ### Research Question 1:
 
 - Descriptive Analysis: Conducting an exhaustive examination of the historical evolution of genre popularity and seasonal trends. This involves dissecting patterns in film releases, identifying genre shifts over time, and understanding their correlation with seasonal fluctuations.
+  
+- Canova-Hansen test: We used such tests to identify differences in correlation patterns throughout history of our dataset. These results enabled us to deepen our understanding of how seasonality and number of movie releases evolved over the years, and to illustrate those results through autocorrelogrammes.
+
+- Correlation analysis: To identify which genres and periods had the nmost impact of the quantity of movie released depending on factors such as location, we used correlation analysis displayed as heatmaps to allow easy identification of the highest and lowest correlation values depending on the mentionned factors. 
 
 ### Research Question 2:
 
